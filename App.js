@@ -3,9 +3,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { StyleSheet, View } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { firebaseConfig } from 'config.js';
+
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
+import { firebaseConfig } from './config';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
