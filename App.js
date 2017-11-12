@@ -25,15 +25,6 @@ export default class App extends React.Component {
   state = { loggedIn: null }
 
   componentWillMount() {
-    const firebaseConfig = {
-      apiKey: 'AIzaSyC8hrmSushrunKQCjEF3efalxnpUNXBpeI',
-      authDomain: 'auth-20c31.firebaseapp.com',
-      databaseURL: 'https://auth-20c31.firebaseio.com',
-      projectId: 'auth-20c31',
-      storageBucket: 'auth-20c31.appspot.com',
-      messagingSenderId: '800845709365'
-    };
-
     firebase.initializeApp(firebaseConfig);
 
     firebase.auth().onAuthStateChanged((user) => {
