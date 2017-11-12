@@ -18,7 +18,6 @@ import VenueSearchScreen from './screens/VenueSearchScreen';
 import ConcertSearchScreen from './screens/ConcertSearchScreen';
 import reducers from './src/reducers';
 
-
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 export default class App extends React.Component {
