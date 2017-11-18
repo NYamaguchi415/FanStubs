@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import { View, TextInput, Keyboard, TouchableWithoutFeedback,
 	Button, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { firebase } from 'firebase';
 import { artistChanged } from '../src/actions/ConcertFinderActions';
 
 //const win = Dimensions.get('window');
-
 class ArtistSearchScreen extends Component {
 	onArtistChanged(text) {
 		this.props.artistChanged(text);
-		firebase.database().ref('artistSearch/').once('value', (snapshot) => {
-			console.log('testing snapshot: ', snapshot);
-		});
 	}
 
 	render() {

@@ -3,9 +3,9 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { StyleSheet, View } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-
-import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
+
+import firebase from './firebaseInit';
 import { firebaseConfig } from './config';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -32,8 +32,8 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    const firebaseApp = firebase.initializeApp(firebaseConfig);
-    firebaseApp.auth().onAuthStateChanged((user) => {
+    //const firebaseApp = firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true });
       } else {
@@ -42,12 +42,10 @@ export default class App extends React.Component {
     });
 
     const projectId = `${firebaseConfig.projectId}/artistSearch`;
-
-    firebase.database.enableLogging(false);
-
-    firebaseApp.database().ref('artistSearch/').once('value', (snapshot) => {
+    //firebase.database.enableLogging(false);
+    firebase.database().ref('artistSearch/').once('value', (snapshot) => {
       console.log('testing snapshot: ', snapshot);
-      console.log(projectId);
+      console.log('project id', projectId);
     });
   }
 
