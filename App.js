@@ -35,9 +35,13 @@ export default class App extends React.Component {
       }
     });
 
-    firebase.database().ref('auth-20c31/artistSearch').on('value', (data) => {
-      console.log(data.val());
-      console.log('hello');
+    const projectId = `${firebaseConfig.projectId}/artistSearch`;
+
+    firebase.database.enableLogging(false);
+
+    firebase.database().ref('artistSearch/').once('value', (snapshot) => {
+      console.log('testing snapshot: ', snapshot);
+      console.log(projectId);
     });
   }
 

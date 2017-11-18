@@ -3,23 +3,16 @@ import { View, TextInput, Keyboard, TouchableWithoutFeedback,
 	Button, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { firebase } from 'firebase';
-import { firebaseConfig } from 'config';
 import { artistChanged } from '../src/actions/ConcertFinderActions';
 
 //const win = Dimensions.get('window');
 
 class ArtistSearchScreen extends Component {
-	// componentWillMount() {
-	// 	console.log('will mount');
-	// 	firebase.database().ref('/auth-20c31/artistSearch').on('value', (snapshot) => {
-	// 		if (snapshot.val()) {
-	// 			console.log(snapshot);
-	// 		}
-	// 	});
-	// }
-
 	onArtistChanged(text) {
 		this.props.artistChanged(text);
+		firebase.database().ref('artistSearch/').once('value', (snapshot) => {
+			console.log('testing snapshot: ', snapshot);
+		});
 	}
 
 	render() {
