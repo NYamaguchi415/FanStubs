@@ -22,17 +22,9 @@ import reducers from './src/reducers';
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 export default class App extends React.Component {
-  //state = { loggedIn: null }
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: null,
-      lat: 'test'
-    };
-  }
+  state = { loggedIn: null }
 
   componentWillMount() {
-    //const firebaseApp = firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true });
@@ -43,7 +35,8 @@ export default class App extends React.Component {
 
     const projectId = `${firebaseConfig.projectId}/artistSearch`;
     //firebase.database.enableLogging(false);
-    firebase.database().ref('artistSearch/').once('value', (snapshot) => {
+    const ref = firebase.database().ref('artistSearch');
+    ref.orderByKey().startAt('a').endAt('azzzzz').once('value', (snapshot) => {
       console.log('testing snapshot: ', snapshot);
       console.log('project id', projectId);
     });
