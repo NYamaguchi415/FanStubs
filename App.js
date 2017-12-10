@@ -6,7 +6,6 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import ReduxThunk from 'redux-thunk';
 
 import firebase from './firebaseInit';
-import { firebaseConfig } from './config';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
@@ -33,13 +32,7 @@ export default class App extends React.Component {
       }
     });
 
-    const projectId = `${firebaseConfig.projectId}/artistSearch`;
-    //firebase.database.enableLogging(false);
-    const ref = firebase.database().ref('artistSearch');
-    ref.orderByKey().startAt('a').endAt('azzzzz').once('value', (snapshot) => {
-      console.log('testing snapshot: ', snapshot);
-      console.log('project id', projectId);
-    });
+    // const projectId = `${firebaseConfig.projectId}/artistSearch`;
   }
 
   render() {

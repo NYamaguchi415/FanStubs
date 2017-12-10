@@ -25,15 +25,21 @@ class ArtistSearchScreen extends Component {
 						/>
 					</View>
 					<View>
-						<FlatList
-							data={[{ key: 'a' }, { key: 'b' }]}
-							renderItem={({ item }) => <Text>{item.key}</Text>}
+						<Button
+							title='press this'
+							onPress={() => this.props.navigation.navigate('yearSearch')}
 						/>
 					</View>
 					<View>
 						<Button
-							title='press this'
-							onPress={() => this.props.navigation.navigate('yearSearch')}
+							title='testArtistSearch'
+							onPress={() => console.log(this.props.artistList)}
+						/>
+					</View>
+					<View>
+						<FlatList
+							data={[{ key: 'a' }, { key: 'b' }]}
+							renderItem={({ item }) => <Text>{item.key}</Text>}
 						/>
 					</View>
 				</View>
@@ -71,8 +77,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ concertFinder }) => {
-	const { artist } = concertFinder;
-	return { artist };
+	const { artistList } = concertFinder;
+	return { artistList };
 };
 
 export default connect(mapStateToProps, {
