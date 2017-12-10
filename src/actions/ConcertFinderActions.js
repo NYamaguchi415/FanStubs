@@ -14,16 +14,20 @@ export const artistChanged = (text) => {
 		};
 };
 
-function firebaseArtistSearch(startString, endString) {
-	const ref = firebase.database().ref('artistSearch');
+async function firebaseArtistSearch(startString, endString) {
+	try {
+		const ref = firebase.database().ref('artistSearch');
 
-	ref.orderByKey()
-	.startAt(startString)
-	.endAt(endString)
-	.once('value', snapshot => {
-		console.log(snapshot.val());
-		return (snapshot.val());
-	});
+		ref.orderByKey()
+		.startAt(startString)
+		.endAt(endString)
+		.once('value', snapshot => {
+			console.log(snapshot.val());
+			return (snapshot.val());
+		});
+	} catch(error) {
+		return null;
+	}
 }
 // export const artistChanged = (text) => {
 // 	const searchStrings = buildSearchString(text);

@@ -37,7 +37,7 @@ class AuthScreen extends Component {
 		}
 
 		return (
-			<Button 
+			<Button
 				onPress={this.signInButtonPressed.bind(this)}
 				style={styles.signInButtonStyle}
 				title='Sign In'
