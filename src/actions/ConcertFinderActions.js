@@ -6,26 +6,46 @@ import {
 
 export const artistChanged = (text) => {
 		const searchStrings = buildSearchString(text);
-		const test = firebaseArtistSearch(searchStrings.startString, searchStrings.endString);
-		console.log(`this is result: ${test}`);
+		let currentSnapshot;
+
+		function getData() {
+			firebaseArtistSearch()
+			.then(setSnapshot, showError);
+		}
+
+		function setSnapshot(snapshot) {
+			currentSnapshot = snapshot.val();
+		}
+
+		function showError(e) {
+			console.log(e);
+		}
+
+		getData(searchStrings.startString, searchStrings.endString)
+		.then(console.log(currentSnapshot));
+		// .then(
+		// 	(data) => {
+		// 		console.log(data);
+		// 	}
+		// );
 		return {
 			type: CONCERT_ARTIST_CHANGED,
 			payload: 'x'
 		};
 };
 
-async function firebaseArtistSearch(startString, endString) {
+function firebaseArtistSearch(startString, endString) {
 	try {
 		const ref = firebase.database().ref('artistSearch');
-
-		ref.orderByKey()
-		.startAt(startString)
-		.endAt(endString)
-		.once('value', snapshot => {
-			console.log(snapshot.val());
-			return (snapshot.val());
-		});
-	} catch(error) {
+		return ref.orderByKey()
+			.startAt(startString)
+			.endAt(endString)
+			.once('value');
+		// .once('value', snapshot => {
+		// 	//console.log(snapshot.val());
+		// 	return (snapshot.val());
+		// });
+	} catch (error) {
 		return null;
 	}
 }
