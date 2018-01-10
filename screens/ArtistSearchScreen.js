@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View, TextInput, Keyboard, TouchableWithoutFeedback,
 	Button, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { artistChanged } from '../src/actions/ConcertFinderActions';
+import { artistInputChanged, artistSearch } from '../src/actions/ConcertFinderActions';
 
 //const win = Dimensions.get('window');
 class ArtistSearchScreen extends Component {
 	onArtistChanged(text) {
-		this.props.artistChanged(text);
+		this.props.artistInputChanged(text);
+		this.props.artistSearch(text);
 	}
 
 	render() {
@@ -21,7 +22,7 @@ class ArtistSearchScreen extends Component {
 							autoCorrect={false}
 							autoCapitalize='none'
 							onChangeText={this.onArtistChanged.bind(this)}
-							value={this.props.artist}
+							value={this.props.artistInput}
 						/>
 					</View>
 					<View>
@@ -77,10 +78,10 @@ const styles = {
 };
 
 const mapStateToProps = ({ concertFinder }) => {
-	const { artistList } = concertFinder;
-	return { artistList };
+	const { artistInput, artistList } = concertFinder;
+	return { artistInput, artistList };
 };
 
 export default connect(mapStateToProps, {
-	artistChanged
+	artistInputChanged, artistSearch
 })(ArtistSearchScreen);

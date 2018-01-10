@@ -8,3 +8,4 @@ export const CONCERT_ARTIST_CHANGED = 'concert_artist_changed';
 export const CONCERT_STATE_CHANGED = 'concert_state_changed';
 export const CONCERT_YEAR_CHANGED = 'concert_year_changed';
 export const CONCERT_VENUE_CHANGED = 'concert_venue_changed';
+export const CONCERT_ARTIST_SEARCH_SUCCESS = 'concert_artist_search_success';

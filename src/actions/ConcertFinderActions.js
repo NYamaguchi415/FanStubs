@@ -1,54 +1,64 @@
 import firebase from '../../firebaseInit';
 
 import {
-	CONCERT_ARTIST_CHANGED
+	CONCERT_ARTIST_CHANGED,
+	CONCERT_ARTIST_SEARCH_SUCCESS
 	} from '../actions/types';
 
-export const artistChanged = (text) => {
-		const searchStrings = buildSearchString(text);
-		let currentSnapshot;
-
-		function getData() {
-			firebaseArtistSearch()
-			.then(setSnapshot, showError);
-		}
-
-		function setSnapshot(snapshot) {
-			currentSnapshot = snapshot.val();
-		}
-
-		function showError(e) {
-			console.log(e);
-		}
-
-		getData(searchStrings.startString, searchStrings.endString)
-		.then(console.log(currentSnapshot));
-		// .then(
-		// 	(data) => {
-		// 		console.log(data);
-		// 	}
-		// );
-		return {
-			type: CONCERT_ARTIST_CHANGED,
-			payload: 'x'
-		};
+export const artistInputChanged = (text) => {
+	return {
+		type: CONCERT_ARTIST_CHANGED,
+		payload: text
+	};
 };
 
-function firebaseArtistSearch(startString, endString) {
-	try {
+export const artistSearch = (text) => {
+		const searchStrings = buildSearchString(text);
+		console.log(searchStrings.startString);
+		console.log(searchStrings.endString);
+		return dispatch => {
+			firebaseArtistSearch(searchStrings.startString, searchStrings.endString)
+			.then(snapshot => {
+				console.log(snapshot.val());
+				dispatch({
+					type: CONCERT_ARTIST_SEARCH_SUCCESS,
+					payload: snapshot.val()
+				});
+			});
+		};
+		// getData(searchStrings.startString, searchStrings.endString);
+		// return {
+		// 	type: CONCERT_ARTIST_SEARCH_SUCCESS,
+		// 	payload: searchStrings.startString
+		// };
+};
+//
+const firebaseArtistSearch = ({ startString, endString }) => {
 		const ref = firebase.database().ref('artistSearch');
+		console.log(startString);
+		console.log(endString);
 		return ref.orderByKey()
-			.startAt(startString)
-			.endAt(endString)
+			.startAt('ph')//(startString)
+			.endAt('phzzz')//(endString)
 			.once('value');
-		// .once('value', snapshot => {
-		// 	//console.log(snapshot.val());
-		// 	return (snapshot.val());
-		// });
-	} catch (error) {
-		return null;
-	}
-}
+	// try {
+	// } catch (error) {
+	// 	return null;
+	// }
+};
+//
+export const getData = ({ startString, endString }) => {
+	return dispatch => {
+		firebaseArtistSearch(startString, endString)
+		.then(snapshot => {
+			console.log(snapshot.val());
+			dispatch({
+				type: CONCERT_ARTIST_SEARCH_SUCCESS,
+				payload: snapshot.val()
+			});
+		});
+	};
+};
 // export const artistChanged = (text) => {
 // 	const searchStrings = buildSearchString(text);
 // 	const artistSearchData = firebaseArtistSearch(
@@ -75,7 +85,7 @@ function firebaseArtistSearch(startString, endString) {
 // 		console.log(error);
 // 	});
 // };
-
+//
 const buildSearchString = (text) => {
 		// Firebase uses a startAt and endAt function to
 		// search keys so take user input and create endString
